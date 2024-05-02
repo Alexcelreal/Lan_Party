@@ -28,3 +28,36 @@ void addAtBeginningTeam(Team **head, char *teamName, int membersNr){
     newTeam->next=*head;
     *head=newTeam;
 }
+
+void deletePlayers(Player **head){
+    Player *headCopy;
+    while(*head!=NULL){
+        headCopy=(*head)->next;
+        free(*head);
+        *head=headCopy;
+    }
+    *head=NULL;
+}
+
+void deleteTeam(Team **head, Team *findTeam){
+    if(*head==NULL) return;
+    Team *headCopy=*head;
+    if(headCopy==findTeam){
+        *head=(*head)->next;
+        //deletePlayers(&findTeam->players);
+        free(findTeam);
+        return;
+    }
+    Team *prev=*head;
+    while(headCopy!=NULL){
+        if(headCopy!=findTeam){
+            prev=headCopy;
+            headCopy=headCopy->next;
+        }else{
+            prev->next=headCopy->next;
+            //deletePlayers(&findTeam->players);
+            free(findTeam);
+            return;
+        }
+    }
+}

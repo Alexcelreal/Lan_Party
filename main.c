@@ -23,8 +23,16 @@ int main(int argc,char *argv[]){
     int var1=0,var2=0,var3=0,var4=0,var5=0;
     fscanf(readFile1,"%d%d%d%d%d",&var1,&var2,&var3,&var4,&var5);
     Team *theTeam=NULL;
-    if(var1==1){ //output pentru task 1
-        theTeam=createTeamList(input_2);
+    int TeamsNumber=0;
+    if(var1==1&&var2==0){ //output pentru task 1
+        theTeam=createTeamList(input_2,&TeamsNumber);
+        showTeamsList(theTeam,output_3);
+    }
+    if(var1==1&&var2==1) //output pentru task 2
+    {
+        theTeam=createTeamList(input_2,&TeamsNumber);
+        //TeamsPoints(theTeam);
+        theNewList(&theTeam,&TeamsNumber);
         showTeamsList(theTeam,output_3);
     }
     fclose(readFile1);

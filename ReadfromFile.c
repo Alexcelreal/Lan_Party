@@ -4,7 +4,7 @@
 
 #include "Lan_Party_header.h"
 
-Team *createTeamList(char *input_2){
+Team *createTeamList(char *input_2, int *TeamsNumber){
     Team *theTeam=NULL;
     Player *thePlayer=NULL;
 
@@ -16,7 +16,7 @@ Team *createTeamList(char *input_2){
 
     int teamsNumber=0;
     fscanf(readFile,"%d",&teamsNumber);
-    printf("%d\n",teamsNumber); //citire nr echipe
+    *TeamsNumber=teamsNumber;
     char *teamName=(char*)malloc(DIM*sizeof(char));
     int membersNr=0;
     while(teamsNumber!=0){
@@ -24,20 +24,20 @@ Team *createTeamList(char *input_2){
         fscanf(readFile,"%d",&membersNr); //citire nr membrii
         fscanf(readFile," ");
         fscanf(readFile,"%[^\n]",teamName); //citire nume echipa
-        //printf("%d %s\n",membersNr,teamName);
         addAtBeginningTeam(&theTeam,teamName,membersNr);
         char *name=(char*)malloc(DIM*sizeof(char));
         char *secondName=(char*)malloc(DIM*sizeof(char));
         int points;
+        int total=0;
         while(membersNr!=0){
             fscanf(readFile,"%s%s%d",name,secondName,&points); //citire nume/prenume/puncte
-            //printf("%s %s %d\n",name,secondName,points);
             addAtBeginningPlayer(&thePlayer,name,secondName,points);
             membersNr--;
+            total+=points;
         }
-        //printf("\n");
         teamsNumber--;
         theTeam->players=thePlayer; //adaugare adresa de inceput a listei thePlayer
+        theTeam->teamPoints=(float)total/(float)theTeam->membersNr;
         free(name);
         free(secondName);
     }
@@ -55,6 +55,7 @@ void showTeamsList(Team *theTeam, char *output_3){
     Team *ptr_team=theTeam;
     while(ptr_team!=NULL){
         fprintf(printFile,"%s\n",ptr_team->teamName);
+        //fprintf(printFile,"%s %f",ptr_team->teamName,ptr_team->teamPoints);
         ptr_team=ptr_team->next;
     }
     fclose(printFile);
