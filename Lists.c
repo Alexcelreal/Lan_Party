@@ -61,3 +61,22 @@ void deleteTeam(Team **head, Team *findTeam){
         }
     }
 }
+
+void deleteTeamList(Team **head){
+    Team *headcopy;
+    while(*head!=NULL){
+        headcopy=(*head)->next;
+        free((*head)->teamName);
+        (*head)->next=NULL;
+        Player *currentPlayer=(*head)->players;
+        while(currentPlayer!=NULL){
+            Player *nextPlayer=currentPlayer->next;
+            free(currentPlayer->firstName);
+            free(currentPlayer->secondName);
+            free(currentPlayer);
+            currentPlayer=nextPlayer;
+        }
+        free(*head);
+        *head=headcopy;
+    }
+}

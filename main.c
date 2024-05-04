@@ -28,13 +28,25 @@ int main(int argc,char *argv[]){
         theTeam=createTeamList(input_2,&TeamsNumber);
         showTeamsList(theTeam,output_3);
     }
-    if(var1==1&&var2==1) //output pentru task 2
+    if(var1==1&&var2==1&&var3==0) //output pentru task 2
     {
+        //rezolvare functia de calculat nr de puncte
+        //rezolvat functia de eliberare de memorie
         theTeam=createTeamList(input_2,&TeamsNumber);
         //TeamsPoints(theTeam);
         theNewList(&theTeam,&TeamsNumber);
         showTeamsList(theTeam,output_3);
     }
+    if(var1==1&&var2==1&&var3==1&&var4==0){
+        theTeam=createTeamList(input_2,&TeamsNumber);
+        theNewList(&theTeam,&TeamsNumber);
+        showTeamsList(theTeam,output_3);
+
+        QueueMatch *theQueue;
+        theQueue= CreateTheQueue(theTeam);
+        TheFinalScore(theQueue,TeamsNumber,output_3);
+    }
     fclose(readFile1);
 }
+
 
