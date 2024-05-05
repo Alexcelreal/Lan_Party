@@ -1,4 +1,5 @@
-#include "Lan_Party_header.h"
+//#include "Lan_Party_header.h"
+#include "Lan_Party_trees.h"
 
 int main(int argc,char *argv[]){
 
@@ -58,10 +59,21 @@ int main(int argc,char *argv[]){
         theQueue= CreateTheQueue(theTeam);
         TheFinalScore(theQueue,TeamsNumber,output_3,&TheEight);
 
-        while(TheEight!=NULL){
+        /*while(TheEight!=NULL){
             printf("%s %.2f\n", strtrim(TheEight->teamName),TheEight->teamPoints);
             TheEight=TheEight->next;
+        }*/
+        //printf("\n");
+        FILE *myfile=fopen(output_3,"at");
+        if(myfile==NULL){
+            perror("Can't open this file");
+            exit(1);
         }
+        BST *tree=NULL;
+        tree= CreateTheTree(TheEight);
+        fprintf(myfile,"\nTOP 8 TEAMS:\n");
+        ShowTheStandings(tree,myfile);
+        fclose(myfile);
     }
     fclose(readFile1);
 }

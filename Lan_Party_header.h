@@ -75,6 +75,9 @@ char *addSpaceFront(char *str);
 
 Team *TheLastEight(QueueMatch **Match);
 
+//for forth task
+
+
 
 
 #ifndef TEMA_LAN_PARTY_LAN_PARTY_HEADER_H
