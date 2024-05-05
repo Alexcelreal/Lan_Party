@@ -66,12 +66,14 @@ int isEmptyStack(Team *Top);
 Team *StackPop(Team **Top);
 void deleteStack(Team **Top);
 void RestoreDate(Team **win, Team **lose, QueueMatch **Match,FILE *myfile);
-void TheFinalScore(QueueMatch *Match, int TeamsNumber, char *output_3);
+void TheFinalScore(QueueMatch *Match, int TeamsNumber, char *output_3, Team **TheEight);
 void deleteQueue(QueueMatch *Match);
 
 char *strtrim(char *str);
 char *addSpaceBack(char *str);
 char *addSpaceFront(char *str);
+
+Team *TheLastEight(QueueMatch **Match);
 
 
 

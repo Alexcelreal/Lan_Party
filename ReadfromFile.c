@@ -54,7 +54,7 @@ void showTeamsList(Team *theTeam, char *output_3){
     }
     Team *ptr_team=theTeam;
     while(ptr_team!=NULL){
-        fprintf(printFile,"%s\n",ptr_team->teamName);
+        fprintf(printFile,"%s\n", strtrim(ptr_team->teamName));
         //fprintf(printFile,"%s    %f",ptr_team->teamName,ptr_team->teamPoints);
         ptr_team=ptr_team->next;
     }

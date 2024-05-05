@@ -5,6 +5,7 @@
 #include "Lan_Party_header.h"
 
 #define TABLE_DESIGN 32
+#define THELAST 8
 
 char *strtrim(char *str) {
     char *end;
@@ -115,8 +116,29 @@ void RestoreDate(Team **win, Team **lose, QueueMatch **Match, FILE *myfile){
     deleteQueue(tempMatch);
 }
 
+Team *TheLastEight(QueueMatch **Match){
+    QueueMatch *Matchcopy=CreateQueue();//creare coda temporara
+    Team *TheEight=NULL;
+    Team *Copy=NULL;
+    while(!isEmpty(*Match)){
+        Copy= deQueue(*Match);
+        addAtBeginningTeam(&TheEight,Copy->teamName,Copy->membersNr);
+        TheEight->teamPoints=Copy->teamPoints;
+        Player *CopyPlayer=Copy->players;
+        Player *TheEightPly=NULL;
+        while(CopyPlayer!=NULL){
+            addAtBeginningPlayer(&TheEightPly,CopyPlayer->firstName,CopyPlayer->secondName,CopyPlayer->points);
+            CopyPlayer=CopyPlayer->next;
+        }
+        TheEight->players=TheEightPly;
+        enQueue(Matchcopy,Copy);
+    }
+    (*Match)=Matchcopy;
+    return TheEight;
+}
 
-void TheFinalScore(QueueMatch *Match, int TeamsNumber, char *output_3){
+
+void TheFinalScore(QueueMatch *Match, int TeamsNumber, char *output_3, Team **TheEight){
     FILE *myfile= fopen(output_3,"at");
     if(myfile==NULL){
         perror("Can't open this file");
@@ -133,8 +155,10 @@ void TheFinalScore(QueueMatch *Match, int TeamsNumber, char *output_3){
         fprintf(myfile,"\n");
         fprintf(myfile,"WINNERS OF ROUND NO:%d\n",cnt);
         RestoreDate(&win, &lose, &Match,myfile);
+        if(pow(2,nrRounds-cnt)==THELAST){
+            (*TheEight)= TheLastEight(&Match);
+        }
         cnt++;
-        //fprintf(myfile,"\n");
     }
     deleteQueue(Match);
     fclose(myfile);

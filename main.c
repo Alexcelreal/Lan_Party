@@ -38,13 +38,30 @@ int main(int argc,char *argv[]){
         showTeamsList(theTeam,output_3);
     }
     if(var1==1&&var2==1&&var3==1&&var4==0){
+        //rezolvare punctaje players din echipe
         theTeam=createTeamList(input_2,&TeamsNumber);
         theNewList(&theTeam,&TeamsNumber);
         showTeamsList(theTeam,output_3);
 
         QueueMatch *theQueue;
+        Team *TheEight=NULL;
         theQueue= CreateTheQueue(theTeam);
-        TheFinalScore(theQueue,TeamsNumber,output_3);
+        TheFinalScore(theQueue,TeamsNumber,output_3,&TheEight);
+    }
+    if(var1==1&&var2==1&&var3==1&&var4==1&&var5==0){
+        theTeam=createTeamList(input_2,&TeamsNumber);
+        theNewList(&theTeam,&TeamsNumber);
+        showTeamsList(theTeam,output_3);
+
+        QueueMatch *theQueue;
+        Team *TheEight=NULL;
+        theQueue= CreateTheQueue(theTeam);
+        TheFinalScore(theQueue,TeamsNumber,output_3,&TheEight);
+
+        while(TheEight!=NULL){
+            printf("%s %.2f\n", strtrim(TheEight->teamName),TheEight->teamPoints);
+            TheEight=TheEight->next;
+        }
     }
     fclose(readFile1);
 }

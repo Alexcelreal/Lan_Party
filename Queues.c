@@ -56,6 +56,7 @@ void printQueue(QueueMatch *Matchs) {
     }
 }
 
+//modificare corectitudine
 void deleteQueue(QueueMatch *Match){
     while(!isEmpty(Match)){
         deQueue(Match);
