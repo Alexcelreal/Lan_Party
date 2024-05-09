@@ -4,43 +4,19 @@
 
 #include "Lan_Party_header.h"
 
-/*void TeamsPoints(Team **head){
-    float total=0;
-    Player *currentPlayer=(*head)->players;
-    while(currentPlayer!=NULL){
-        total+=(float)currentPlayer->points;
-        currentPlayer=currentPlayer->next;
-    }
-    (*head)->teamPoints=total/(float)(*head)->membersNr;
-}*/
-
-/*void TeamsPoints(Team **head){
-    while(*head!=NULL){
-        float total=0;
-        Player *Playerptr=(*head)->players;
-        while(Playerptr!=NULL){
-            total+=(float)Playerptr->points;
-            Playerptr=Playerptr->next;
-        }
-        (*head)->teamPoints=total/(float)(*head)->membersNr;
-        (*head)=(*head)->next;
-    }
-}*/
-
 void TeamsPoints(Team *head) {
     Team *currentTeam = head;
     while (currentTeam != NULL) {
         float total = 0;
         Player *currentPlayer = currentTeam->players;
         while (currentPlayer != NULL) {
-            total += (float) currentPlayer->points;
+            total += currentPlayer->points;
             currentPlayer = currentPlayer->next;
         }
         currentTeam->teamPoints = total / (float) currentTeam->membersNr;
         currentTeam = currentTeam->next;
     }
 }
-
 
 Team *minScoreTeam(Team *head){
     float min_score=head->teamPoints;

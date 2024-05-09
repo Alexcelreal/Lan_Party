@@ -27,20 +27,20 @@ int main(int argc,char *argv[]){
     int TeamsNumber=0;
     if(var1==1&&var2==0){ //output pentru task 1
         theTeam=createTeamList(input_2,&TeamsNumber);
+        TeamsPoints(theTeam);
         showTeamsList(theTeam,output_3);
     }
     if(var1==1&&var2==1&&var3==0) //output pentru task 2
     {
-        //rezolvare functia de calculat nr de puncte
-        //rezolvat functia de eliberare de memorie
         theTeam=createTeamList(input_2,&TeamsNumber);
-        //TeamsPoints(theTeam);
+        TeamsPoints(theTeam);
         theNewList(&theTeam,&TeamsNumber);
         showTeamsList(theTeam,output_3);
     }
     if(var1==1&&var2==1&&var3==1&&var4==0){
         //rezolvare punctaje players din echipe
         theTeam=createTeamList(input_2,&TeamsNumber);
+        TeamsPoints(theTeam);
         theNewList(&theTeam,&TeamsNumber);
         showTeamsList(theTeam,output_3);
 
@@ -51,6 +51,7 @@ int main(int argc,char *argv[]){
     }
     if(var1==1&&var2==1&&var3==1&&var4==1&&var5==0){
         theTeam=createTeamList(input_2,&TeamsNumber);
+        TeamsPoints(theTeam);
         theNewList(&theTeam,&TeamsNumber);
         showTeamsList(theTeam,output_3);
 
@@ -77,6 +78,7 @@ int main(int argc,char *argv[]){
     }
     if(var1==1&&var2==1&&var3==1&&var4==1&&var5==1){
         theTeam=createTeamList(input_2,&TeamsNumber);
+        TeamsPoints(theTeam);
         theNewList(&theTeam,&TeamsNumber);
         showTeamsList(theTeam,output_3);
 

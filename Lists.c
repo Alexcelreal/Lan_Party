@@ -30,11 +30,12 @@ void addAtBeginningTeam(Team **head, char *teamName, int membersNr){
 }
 
 void deletePlayers(Player **head){
+    Player *current=(*head);
     Player *headCopy;
-    while(*head!=NULL){
-        headCopy=(*head)->next;
-        free(*head);
-        *head=headCopy;
+    while(current!=NULL){
+        headCopy=current->next;
+        free(current);
+        current=headCopy;
     }
     *head=NULL;
 }
@@ -44,7 +45,7 @@ void deleteTeam(Team **head, Team *findTeam){
     Team *headCopy=*head;
     if(headCopy==findTeam){
         *head=(*head)->next;
-        //deletePlayers(&findTeam->players);
+        deletePlayers(&findTeam->players);
         free(findTeam);
         return;
     }
@@ -55,7 +56,7 @@ void deleteTeam(Team **head, Team *findTeam){
             headCopy=headCopy->next;
         }else{
             prev->next=headCopy->next;
-            //deletePlayers(&findTeam->players);
+            deletePlayers(&findTeam->players);
             free(findTeam);
             return;
         }
