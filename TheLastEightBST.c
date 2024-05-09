@@ -52,7 +52,8 @@ void ShowTheStandings(BST *root, FILE *myfile){ //parcurgere inordine in sens in
     if(root==NULL) return;
     ShowTheStandings(root->right, myfile);
     char *c1=NULL;
-    c1= addSpaceBack(strtrim(root->theTeams->teamName));
+    c1= strdup(strtrim(root->theTeams->teamName));
+    c1= addSpaceBack(c1);
     fprintf(myfile,"%s -  %.2f\n",c1,root->theTeams->teamPoints);
     free(c1);
     ShowTheStandings(root->left,myfile);

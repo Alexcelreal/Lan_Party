@@ -10,11 +10,21 @@ typedef struct BST{
     struct BST *right;
 }BST;
 
+// task 4
 bool verifyCond(float score1, float score2, char *name1, char *name2);
 BST *newNode(Team *theTeam);
 BST *Insert(BST *node, Team *theTeam);
 BST *CreateTheTree(Team *theEight);
 void ShowTheStandings(BST *root, FILE *myfile);
+
+//task 5
+void InorderList(BST *root, Team **theTeam);
+void afisare(Team *theTeam);
+void addToList(Team **theTeam, Team *data);
+BST *buildAVL(Team **theTeam, int start, int finish);
+void printLevel(BST *root, int level, FILE *myfile);
+int heigh(BST *root);
+void levelOrderTraversal(BST *root);
 
 #ifndef TEMA_LAN_PARTY_LAN_PARTY_TREES_H
 #define TEMA_LAN_PARTY_LAN_PARTY_TREES_H

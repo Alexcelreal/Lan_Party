@@ -75,6 +75,43 @@ int main(int argc,char *argv[]){
         ShowTheStandings(tree,myfile);
         fclose(myfile);
     }
+    if(var1==1&&var2==1&&var3==1&&var4==1&&var5==1){
+        theTeam=createTeamList(input_2,&TeamsNumber);
+        theNewList(&theTeam,&TeamsNumber);
+        showTeamsList(theTeam,output_3);
+
+        QueueMatch *theQueue;
+        Team *TheEight=NULL;
+        theQueue= CreateTheQueue(theTeam);
+        TheFinalScore(theQueue,TeamsNumber,output_3,&TheEight);
+
+        /*while(TheEight!=NULL){
+            printf("%s %.2f\n", strtrim(TheEight->teamName),TheEight->teamPoints);
+            TheEight=TheEight->next;
+        }*/
+        //printf("\n");
+        FILE *myfile=fopen(output_3,"at");
+        if(myfile==NULL){
+            perror("Can't open this file");
+            exit(1);
+        }
+        BST *tree=NULL;
+        tree= CreateTheTree(TheEight);
+        fprintf(myfile,"\nTOP 8 TEAMS:\n");
+        ShowTheStandings(tree,myfile);
+
+        Team *Inorderlist=NULL;
+        InorderList(tree,&Inorderlist);
+        afisare(Inorderlist);
+        printf("\n");
+
+        BST *AVL=NULL;
+        AVL= buildAVL(&Inorderlist,0,7);
+        //levelOrderTraversal(AVL);
+        fprintf(myfile,"\nTHE LEVEL 2 TEAMS ARE: \n");
+        printLevel(AVL,3,myfile);
+        fclose(myfile);
+    }
     fclose(readFile1);
 }
 

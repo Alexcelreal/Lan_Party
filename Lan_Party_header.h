@@ -36,13 +36,13 @@ typedef struct QueueMatch{
     QueueNode *Rear;
 }QueueMatch;
 
-//for first task
+//task 1
 void addAtBeginningPlayer(Player **head, char *firstNmame, char *secondName, int points);
 void addAtBeginningTeam(Team **head, char *teamName, int membersNr);
 Team *createTeamList(char *input_2, int *teamsNumber);
 void showTeamsList(Team *theTeam, char *output_3);
 
-//for second task
+//task 2
 void deletePlayers(Player **head);
 void deleteTeam(Team **head, Team *findTeam);
 void TeamsPoints(Team *head);
@@ -50,7 +50,7 @@ Team *minScoreTeam(Team *head);
 bool powerOfTwo(int number);
 void theNewList(Team **head, int *teamsNumber);
 
-//for third task
+//task 3
 QueueMatch *CreateQueue();
 QueueMatch *CreateTheQueue(Team *theTeam);
 void enQueue(QueueMatch *Matchs, Team *theTeam);
@@ -74,11 +74,6 @@ char *addSpaceBack(char *str);
 char *addSpaceFront(char *str);
 
 Team *TheLastEight(QueueMatch **Match);
-
-//for forth task
-
-
-
 
 #ifndef TEMA_LAN_PARTY_LAN_PARTY_HEADER_H
 #define TEMA_LAN_PARTY_LAN_PARTY_HEADER_H
