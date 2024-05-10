@@ -36,30 +36,19 @@ Team *deQueue(QueueMatch *Matchs){
     if(isEmpty(Matchs)) return NULL;
     QueueNode *aux=Matchs->Front;
     Team *dequeueTeam=aux->data;
-    //dequeueTeam->teamName= strdup(aux->data->teamName);
     Matchs->Front=Matchs->Front->next;
     free(aux);
     return dequeueTeam;
 }
 
-void printQueue(QueueMatch *Matchs) {
-    if (isEmpty(Matchs)) {
-        printf("Coadă goală.\n");
-        return;
-    }
-    QueueNode *currentNode = Matchs->Front;
-    printf("Conținutul cozii:\n");
-    while (currentNode != NULL) {
-        Team *team = currentNode->data;
-        printf("Nume echipă: %s\n", team->teamName);
-        currentNode = currentNode->next->next;
-    }
-}
-
-//modificare corectitudine
 void deleteQueue(QueueMatch *Match){
+    QueueNode *aux;
     while(!isEmpty(Match)){
-        deQueue(Match);
+        aux=Match->Front;
+        Match->Front=Match->Front->next;
+        free(aux->data->teamName);
+        deletePlayers(&aux->data->players);
+        free(aux);
     }
-    free(Match);
+    Match=NULL;
 }

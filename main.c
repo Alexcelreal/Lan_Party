@@ -1,4 +1,3 @@
-//#include "Lan_Party_header.h"
 #include "Lan_Party_trees.h"
 
 int main(int argc,char *argv[]){
@@ -29,6 +28,7 @@ int main(int argc,char *argv[]){
         theTeam=createTeamList(input_2,&TeamsNumber);
         TeamsPoints(theTeam);
         showTeamsList(theTeam,output_3);
+        deleteTeamList(&theTeam);
     }
     if(var1==1&&var2==1&&var3==0) //output pentru task 2
     {
@@ -36,9 +36,9 @@ int main(int argc,char *argv[]){
         TeamsPoints(theTeam);
         theNewList(&theTeam,&TeamsNumber);
         showTeamsList(theTeam,output_3);
+        deleteTeamList(&theTeam);
     }
     if(var1==1&&var2==1&&var3==1&&var4==0){
-        //rezolvare punctaje players din echipe
         theTeam=createTeamList(input_2,&TeamsNumber);
         TeamsPoints(theTeam);
         theNewList(&theTeam,&TeamsNumber);
@@ -47,7 +47,9 @@ int main(int argc,char *argv[]){
         QueueMatch *theQueue;
         Team *TheEight=NULL;
         theQueue= CreateTheQueue(theTeam);
+        theTeam=NULL;
         TheFinalScore(theQueue,TeamsNumber,output_3,&TheEight);
+        deleteQueue(theQueue);
     }
     if(var1==1&&var2==1&&var3==1&&var4==1&&var5==0){
         theTeam=createTeamList(input_2,&TeamsNumber);
@@ -74,6 +76,7 @@ int main(int argc,char *argv[]){
         tree= CreateTheTree(TheEight);
         fprintf(myfile,"\nTOP 8 TEAMS:\n");
         ShowTheStandings(tree,myfile);
+        deleteTheTree(tree);
         fclose(myfile);
     }
     if(var1==1&&var2==1&&var3==1&&var4==1&&var5==1){
@@ -104,14 +107,15 @@ int main(int argc,char *argv[]){
 
         Team *Inorderlist=NULL;
         InorderList(tree,&Inorderlist);
-        afisare(Inorderlist);
-        printf("\n");
+        //afisare(Inorderlist);
+        //printf("\n");
 
         BST *AVL=NULL;
         AVL= buildAVL(&Inorderlist,0,7);
         //levelOrderTraversal(AVL);
         fprintf(myfile,"\nTHE LEVEL 2 TEAMS ARE: \n");
         printLevel(AVL,3,myfile);
+        deleteTheTree(AVL);
         fclose(myfile);
     }
     fclose(readFile1);

@@ -53,16 +53,23 @@ char *addSpaceFront(char *str){
     return strNew;
 }
 
-
 QueueMatch *CreateTheQueue(Team *theTeam){
     QueueMatch *theQueue=CreateQueue();
     while(theTeam!=NULL){
-        //theTeam->next=NULL
         enQueue(theQueue,theTeam);
         theTeam=theTeam->next;
     }
     deleteTeamList(&theTeam);
     return theQueue;
+}
+
+void modifyPlyPoint(Player *thePlayer, int teamMembers){
+    Player *PlayerCpy=thePlayer;
+    float ratio=(float)1/(float)teamMembers;
+    while(PlayerCpy!=NULL){
+        PlayerCpy->points+=ratio;
+        PlayerCpy=PlayerCpy->next;
+    }
 }
 
 void showtheTable(QueueMatch *Match, Team **win, Team **lost,FILE *myfile){
@@ -78,23 +85,30 @@ void showtheTable(QueueMatch *Match, Team **win, Team **lost,FILE *myfile){
         fprintf(myfile,"%s-%s\n",c1,c2);
         free(c1);
         free(c2);
-        //printf("%s - %s\n", strtrim(T1->teamName), strtrim(T2->teamName));
         if(T1->teamPoints>T2->teamPoints){
             T1->teamPoints+=1;
+            modifyPlyPoint(T1->players,T1->membersNr);
             StackPush(win,T1);
             StackPush(lost,T2);
         }else if(T1->teamPoints<T2->teamPoints){
             T2->teamPoints+=1;
+            modifyPlyPoint(T2->players,T2->membersNr);
             StackPush(win,T2);
             StackPush(lost,T1);
         }else{
             T2->teamPoints+=1;
+            modifyPlyPoint(T2->players,T2->membersNr);
             StackPush(win,T2);
         }
     }
+    T1=NULL;
+    T2=NULL;
+    deleteQueue(Match);
     /*free(T1->teamName);
+    deletePlayers(&T1->players);
     free(T1);
     free(T2->teamName);
+    deletePlayers(&T2->players);
     free(T2);*/
 }
 
@@ -160,6 +174,7 @@ void TheFinalScore(QueueMatch *Match, int TeamsNumber, char *output_3, Team **Th
         }
         cnt++;
     }
+    deleteStack(&win);
     deleteQueue(Match);
     fclose(myfile);
 }

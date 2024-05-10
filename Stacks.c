@@ -9,8 +9,6 @@ int isEmptyStack(Team *Top){
 }
 
 void StackPush(Team **Top, Team *theTeam){
-    //Team *newTeam=(Team*)malloc(sizeof(Team));
-    //newTeam=theTeam;
     theTeam->next=*Top;
     *Top=theTeam;
 }
@@ -28,8 +26,11 @@ void deleteStack(Team **Top){
     while((*Top)!=NULL){
         temp=*Top;
         *Top=(*Top)->next;
+        free(temp->teamName);
+        deletePlayers(&temp->players);
         free(temp);
     }
+    *Top=NULL;
 }
 
 

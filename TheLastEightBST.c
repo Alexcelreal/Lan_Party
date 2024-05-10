@@ -40,6 +40,15 @@ BST *CreateTheTree(Team *theEight){
     return root;
 }
 
+void deleteTheTree(BST *root){
+    if(root==NULL) return;
+    deleteTheTree(root->left);
+    deleteTheTree(root->right);
+    free(root->theTeams->teamName);
+    deletePlayers(&root->theTeams->players);
+    free(root);
+}
+
 /*void ShowTheStandings(BST *root){ //parcurgere preordine
     if(root){
         printf("%s %f\n", strtrim(root->theTeams->teamName),root->theTeams->teamPoints);

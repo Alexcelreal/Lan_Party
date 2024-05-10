@@ -4,7 +4,7 @@
 
 #include "Lan_Party_header.h"
 
-void addAtBeginningPlayer(Player **head, char *firstNmame, char *secondName, int points){
+void addAtBeginningPlayer(Player **head, char *firstNmame, char *secondName, float points){
     Player *newPlayer=(Player*)malloc(sizeof(Player));
     if(newPlayer==NULL){
         printf("Not enough memory");
@@ -34,6 +34,8 @@ void deletePlayers(Player **head){
     Player *headCopy;
     while(current!=NULL){
         headCopy=current->next;
+        free(current->firstName);
+        free(current->secondName);
         free(current);
         current=headCopy;
     }
@@ -46,6 +48,7 @@ void deleteTeam(Team **head, Team *findTeam){
     if(headCopy==findTeam){
         *head=(*head)->next;
         deletePlayers(&findTeam->players);
+        free(findTeam->teamName);
         free(findTeam);
         return;
     }
@@ -57,6 +60,7 @@ void deleteTeam(Team **head, Team *findTeam){
         }else{
             prev->next=headCopy->next;
             deletePlayers(&findTeam->players);
+            free(findTeam->teamName);
             free(findTeam);
             return;
         }
@@ -67,17 +71,10 @@ void deleteTeamList(Team **head){
     Team *headcopy;
     while(*head!=NULL){
         headcopy=(*head)->next;
+        deletePlayers(&(*head)->players);
         free((*head)->teamName);
-        (*head)->next=NULL;
-        Player *currentPlayer=(*head)->players;
-        while(currentPlayer!=NULL){
-            Player *nextPlayer=currentPlayer->next;
-            free(currentPlayer->firstName);
-            free(currentPlayer->secondName);
-            free(currentPlayer);
-            currentPlayer=nextPlayer;
-        }
         free(*head);
         *head=headcopy;
     }
+    (*head)=NULL;
 }
