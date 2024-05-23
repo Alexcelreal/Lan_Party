@@ -101,4 +101,5 @@ int main(int argc, char *argv[]) {
         deleteTheTree(AVL);
         fclose(myfile);
     }
+    //modificare
 }
