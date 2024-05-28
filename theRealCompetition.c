@@ -7,7 +7,7 @@
 #define TABLE_DESIGN 32
 #define THELAST 8
 
-void addSpace(char *str, FILE *myfile) {
+void addSpace(char *str, FILE *myfile) { //adaugare spatii pentru afisare
     int strDim = strlen(str) - 1;
     int strSpace = TABLE_DESIGN - strDim;
     while (strSpace != 0) {
@@ -16,7 +16,7 @@ void addSpace(char *str, FILE *myfile) {
     }
 }
 
-QueueMatch *CreateTheQueue(Team *theTeam) {
+QueueMatch *CreateTheQueue(Team *theTeam) { //creare coada initiala din lista de la task2
     QueueMatch *theQueue = CreateQueue();
     while (theTeam != NULL) {
         enQueue(theQueue, theTeam);
@@ -26,7 +26,7 @@ QueueMatch *CreateTheQueue(Team *theTeam) {
     return theQueue;
 }
 
-void modifyPlyPoint(Player *thePlayer, int teamMembers) {
+void modifyPlyPoint(Player *thePlayer, int teamMembers) { //modificare puntaj player daca a castigat echipa
     Player *PlayerCpy = thePlayer;
     float ratio = (float) 1 / (float) teamMembers;
     while (PlayerCpy != NULL) {
@@ -35,7 +35,7 @@ void modifyPlyPoint(Player *thePlayer, int teamMembers) {
     }
 }
 
-void showtheTable(QueueMatch *Match, Team **win, Team **lost, FILE *myfile) {
+void showtheTable(QueueMatch *Match, Team **win, Team **lost, FILE *myfile) { //afisare meciuri si adaugare in stiva win/ lose
     Team *T1 = NULL;
     Team *T2 = NULL;
     while (!isEmpty(Match)) {
@@ -61,6 +61,7 @@ void showtheTable(QueueMatch *Match, Team **win, Team **lost, FILE *myfile) {
             T2->teamPoints += 1;
             modifyPlyPoint(T2->players, T2->membersNr);
             StackPush(win, T2);
+            StackPush(lost,T1);
         }
     }
     T1 = NULL;
@@ -68,7 +69,7 @@ void showtheTable(QueueMatch *Match, Team **win, Team **lost, FILE *myfile) {
     deleteQueue(Match);
 }
 
-void RestoreDate(Team **win, Team **lose, QueueMatch **Match, FILE *myfile) {
+void RestoreData(Team **win, Team **lose, QueueMatch **Match, FILE *myfile) { //mutare date din win in coada Match + afisare rezultate
     deleteStack(lose);
     Team *newTeam = NULL;
     QueueMatch *tempMatch = CreateQueue();  // coadă temporară
@@ -86,7 +87,7 @@ void RestoreDate(Team **win, Team **lose, QueueMatch **Match, FILE *myfile) {
     deleteQueue(tempMatch);
 }
 
-Team *TheLastEight(QueueMatch **Match) {
+Team *TheLastEight(QueueMatch **Match) { // creare lista cu ultimele 8 echipe
     QueueMatch *Matchcopy = CreateQueue();//creare coda temporara
     Team *TheEight = NULL;
     Team *Copy = NULL;
@@ -100,8 +101,8 @@ Team *TheLastEight(QueueMatch **Match) {
             addAtBeginningPlayer(&TheEightPly, CopyPlayer->firstName, CopyPlayer->secondName, CopyPlayer->points);
             CopyPlayer = CopyPlayer->next;
         }
-        TheEight->players = TheEightPly;
-        enQueue(Matchcopy, Copy);
+        TheEight->players = TheEightPly; //atasare adresa de inceput a listei de jucatori
+        enQueue(Matchcopy, Copy); //aduagre in coada temporara
     }
     (*Match) = Matchcopy;
     return TheEight;
@@ -121,11 +122,11 @@ void TheFinalScore(QueueMatch *Match, int TeamsNumber, char *output_3, Team **Th
     while (cnt <= nrRounds) {
         fprintf(myfile, "\n");
         fprintf(myfile, "--- ROUND NO:%d\n", cnt);
-        showtheTable(Match, &win, &lose, myfile);
+        showtheTable(Match, &win, &lose, myfile); //afisare meciuri
         fprintf(myfile, "\n");
         fprintf(myfile, "WINNERS OF ROUND NO:%d\n", cnt);
-        RestoreDate(&win, &lose, &Match, myfile);
-        if (pow(2, nrRounds - cnt) == THELAST) {
+        RestoreData(&win, &lose, &Match, myfile); //afisare castigatori
+        if (pow(2, nrRounds - cnt) == THELAST) { //adaugare ultimii 8
             (*TheEight) = TheLastEight(&Match);
         }
         cnt++;

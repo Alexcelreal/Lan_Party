@@ -9,7 +9,7 @@ void addToList(Team **theTeam, Team *data) {
     (*theTeam) = data;
 }
 
-void InorderList(BST *root, Team **theTeam) {
+void InorderList(BST *root, Team **theTeam) { //adaugare BST intr-o lista in inordine (SRD)
     if (root == NULL) {
         return;
     }
@@ -18,16 +18,16 @@ void InorderList(BST *root, Team **theTeam) {
     InorderList(root->right, theTeam);
 }
 
-BST *buildAVL(Team **theTeam, int start, int finish) {
+BST *buildAVL(Team **theTeam, int start, int finish) { //utilizare divide et impera
     if (start > finish || (*theTeam) == NULL)
         return NULL;
     int middle = (start + finish) / 2;
     Team *theTeamcpy = (*theTeam);
-    for (int i = 0; i < middle && theTeamcpy != NULL; i++) {
+    for (int i = 0; i < middle && theTeamcpy != NULL; i++) { //ma deplasez spre mijloc
         theTeamcpy = theTeamcpy->next;
     }
-    if (theTeamcpy != NULL) {
-        BST *newNode = (BST *) malloc(sizeof(BST));
+    if (theTeamcpy != NULL) { //verificare daca exista element
+        BST *newNode = (BST *) malloc(sizeof(BST)); //creare nod AVL
         if (newNode == NULL) {
             printf("Not enough memory");
             exit(1);
@@ -35,8 +35,8 @@ BST *buildAVL(Team **theTeam, int start, int finish) {
         newNode->theTeams = theTeamcpy;
         newNode->left = NULL;
         newNode->right = NULL;
-        newNode->left = buildAVL(theTeam, start, middle - 1);
-        newNode->right = buildAVL(theTeam, middle + 1, finish);
+        newNode->left = buildAVL(theTeam, start, middle - 1); //generare subarbore stang
+        newNode->right = buildAVL(theTeam, middle + 1, finish); //generare subarbore drept
         return newNode;
     } else
         return NULL;

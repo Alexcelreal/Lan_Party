@@ -4,20 +4,20 @@
 
 #include "Lan_Party_header.h"
 
-char *strtrim(char *str) {
+char *strtrim(char *string) {
+    while (isspace(*string)) { //stergere spatii goale inceput
+        string++;
+    }
+    if (*string == '\0') {
+        return string;
+    }
     char *end;
-    while (isspace((unsigned char) *str)) { //stergere spatii inceput
-        str++;
-    }
-    if (*str == '\0') {
-        return str;
-    }
-    end = str + strlen(str) - 1;
-    while (end > str && isspace((unsigned char) *end)) { //stergere spatii final
+    end = string + strlen(string) - 1; //pozitionare ultim caracter ce nu este spatiu
+    while (end > string && isspace(*end)) { //stergere spatii goale final
         end--;
     }
     *(end + 1) = '\0';
-    return str;
+    return string;
 }
 
 Team *createTeamList(char *input_2, int *TeamsNumber) {
@@ -30,7 +30,7 @@ Team *createTeamList(char *input_2, int *TeamsNumber) {
     }
 
     int teamsNumber = 0;
-    fscanf(readFile, "%d", &teamsNumber);
+    fscanf(readFile, "%d", &teamsNumber); //citire numar echipe
     *TeamsNumber = teamsNumber;
     char *teamName = (char *) malloc(DIM * sizeof(char));
     int membersNr = 0;
@@ -39,14 +39,14 @@ Team *createTeamList(char *input_2, int *TeamsNumber) {
         membersNr = 0;
         fscanf(readFile, "%d", &membersNr); //citire nr membrii
         fscanf(readFile, " ");
-        fscanf(readFile, "%[^\n]", teamName); //citire nume echipa
+        fscanf(readFile, "%[^\n]", teamName); //citire nume echipa (citire pana la \n)
         strtrim(teamName);
         addAtBeginningTeam(&theTeam, teamName, membersNr);
-        int points;
+        float points;
         char *name = (char *) malloc(DIM * sizeof(char));
         char *secondName = (char *) malloc(DIM * sizeof(char));
         while (membersNr != 0) {
-            fscanf(readFile, "%s%s%d", name, secondName, &points); //citire nume/prenume/puncte
+            fscanf(readFile, "%s%s%f", name, secondName, &points); //citire nume/prenume/puncte
             addAtBeginningPlayer(&thePlayer, name, secondName, points);
             membersNr--;
         }

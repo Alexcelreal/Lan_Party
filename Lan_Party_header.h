@@ -81,13 +81,13 @@ Team *StackPop(Team **Top);
 
 void deleteStack(Team **Top);
 
-void RestoreDate(Team **win, Team **lose, QueueMatch **Match, FILE *myfile);
+void RestoreData(Team **win, Team **lose, QueueMatch **Match, FILE *myfile);
 
 void TheFinalScore(QueueMatch *Match, int TeamsNumber, char *output_3, Team **TheEight);
 
 void deleteQueue(QueueMatch *Match);
 
-char *strtrim(char *str);
+char *strtrim(char *string);
 
 Team *TheLastEight(QueueMatch **Match);
 

@@ -24,14 +24,14 @@ BST *newNode(Team *theTeam) {
 BST *Insert(BST *node, Team *theTeam) {
     if (node == NULL) return newNode(theTeam);
     if (verifyCond(node->theTeams->teamPoints, theTeam->teamPoints, node->theTeams->teamName, theTeam->teamName)) {
-        node->left = Insert(node->left, theTeam);
+        node->left = Insert(node->left, theTeam); //inserare subarbore stang
     } else {
-        node->right = Insert(node->right, theTeam);
+        node->right = Insert(node->right, theTeam); //inserare subarbore drept
     }
     return node;
 }
 
-BST *CreateTheTree(Team *theEight) {
+BST *CreateTheTree(Team *theEight) { //creare arbore BST
     BST *root = NULL;
     while (theEight != NULL) {
         root = Insert(root, theEight);
@@ -49,7 +49,7 @@ void deleteTheTree(BST *root) {
     free(root);
 }
 
-void ShowTheStandings(BST *root, FILE *myfile) { //parcurgere inordine in sens invers
+void ShowTheStandings(BST *root, FILE *myfile) { //parcurgere inordine in sens invers (DRS) + afisare echipe si punctaj
     if (root == NULL) return;
     ShowTheStandings(root->right, myfile);
     fprintf(myfile, "%s ", root->theTeams->teamName);
